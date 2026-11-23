@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Gemini 笔记本会话展开",
+  "version": "1.0.0",
+  "description": "在 Gemini 侧边栏里展开笔记本，直接看到笔记本内的对话。",
+  "permissions": ["storage"],
+  "host_permissions": ["https://gemini.google.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://gemini.google.com/*"],
+      "js": ["interceptor.js"],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://gemini.google.com/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_start"
+    }
+  ]
+}

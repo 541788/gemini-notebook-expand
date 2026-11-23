@@ -1,0 +1,71 @@
+/* 笔记本行：用展开箭头替代原来的笔记本图标 */
+.gnex-item .leading-icon-container.gnex-icon-box > gem-icon {
+  display: none;
+}
+
+.gnex-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  opacity: 0.72;
+  cursor: pointer;
+}
+
+.gnex-toggle:hover {
+  background: rgba(127, 127, 127, 0.18);
+  opacity: 1;
+}
+
+.gnex-toggle svg {
+  transition: transform 120ms ease;
+  transform: rotate(-90deg);
+}
+
+.gnex-toggle[aria-expanded='true'] svg {
+  transform: rotate(0deg);
+}
+
+/* 笔记本内的会话列表 */
+.gnex-chats {
+  display: flex;
+  flex-direction: column;
+  padding: 2px 0 4px;
+}
+
+.gnex-chats[hidden] {
+  display: none;
+}
+
+.gnex-chat {
+  display: block;
+  overflow: hidden;
+  padding: 6px 12px 6px 44px;
+  border-radius: 8px;
+  color: inherit;
+  font-size: 13px;
+  line-height: 18px;
+  opacity: 0.72;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gnex-chat:hover {
+  background: rgba(127, 127, 127, 0.16);
+  opacity: 1;
+}
+
+.gnex-hint {
+  display: block;
+  padding: 6px 12px 6px 44px;
+  font-size: 13px;
+  line-height: 18px;
+  opacity: 0.6;
+}
