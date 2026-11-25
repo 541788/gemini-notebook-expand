@@ -12,12 +12,13 @@
   if (window.__gnexInterceptorInstalled) return;
   window.__gnexInterceptorInstalled = true;
   // 方便确认当前页面跑的是哪一版代码
-  window.__gnexVersion = 5;
+  window.__gnexVersion = 6;
 
   const CHANNEL = 'gnex';
   const EVENT_NAME = 'gnex:notebook-chats';
   const NAVIGATE_EVENT = 'gnex:navigate-chat';
   const CHAT_LIST_RPC = 'rpcids=MaZiqc';
+  let lastNavigationId = Number(history.state?.navigationId) || 0;
 
   window.addEventListener(NAVIGATE_EVENT, (event) => {
     let data;
@@ -36,12 +37,16 @@
       return;
     }
 
-    // Angular 用 navigationId 区分每次导航。快速切换时重复使用原 state
-    // 会产生多个相同编号的导航，因此每次都在当前编号上递增。
+    // Angular 用 navigationId 区分每次导航。Gemini 原生导航会把 state 设为 null，
+    // 因此不能只从当前 state 取编号，否则下几次扩展导航会重新从 1 开始。
     const currentState = history.state && typeof history.state === 'object' ? history.state : {};
+    lastNavigationId = Math.max(
+      lastNavigationId + 1,
+      (Number(currentState.navigationId) || 0) + 1,
+    );
     const state = {
       ...currentState,
-      navigationId: (Number(currentState.navigationId) || 0) + 1,
+      navigationId: lastNavigationId,
     };
     history.pushState(state, '', target.pathname);
     window.dispatchEvent(new PopStateEvent('popstate', { state }));

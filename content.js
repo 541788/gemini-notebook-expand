@@ -165,6 +165,15 @@
     return list.sort((a, b) => b.time - a.time);
   }
 
+  function updateActiveChat() {
+    for (const link of document.querySelectorAll('.gnex-chat')) {
+      const active = new URL(link.href, location.href).pathname === location.pathname;
+      link.classList.toggle('gnex-chat-active', active);
+      if (active) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    }
+  }
+
   /* ---------------- 渲染 ---------------- */
 
   function renderChats(notebookId) {
@@ -185,6 +194,8 @@
       link.addEventListener('click', (event) => navigateToChat(event, chat.id));
       container.appendChild(link);
     }
+
+    updateActiveChat();
 
     if (!state.complete && !state.settled) {
       container.appendChild(hint(chats.length ? '正在载入完整对话…' : '正在载入对话…'));
@@ -288,6 +299,7 @@
 
   function syncSidebar() {
     if (isTempTab) return;
+    updateActiveChat();
 
     const items = document.querySelectorAll('project-sidenav-list-item');
 
@@ -319,6 +331,8 @@
   }
 
   /* ---------------- 消息 ---------------- */
+
+  window.addEventListener('popstate', updateActiveChat);
 
   // 页面主世界的拦截器拿到会话列表（CustomEvent 跨世界传递）。
   window.addEventListener(EVENT_NAME, (event) => {

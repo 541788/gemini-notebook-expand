@@ -62,6 +62,12 @@
   opacity: 1;
 }
 
+.gnex-chat.gnex-chat-active {
+  background: rgba(127, 127, 127, 0.18);
+  font-weight: 600;
+  opacity: 1;
+}
+
 .gnex-hint {
   display: block;
   padding: 6px 12px 6px 44px;
